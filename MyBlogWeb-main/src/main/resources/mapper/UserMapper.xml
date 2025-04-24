@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rethx.managesys.mapper.UserMapper">
+    <update id="updateUser">
+        update db_myblog.user
+        <set>
+            <if test="username!=null and username!=''">username = #{username},</if>
+            <if test="passwd!=null and passwd!=''">passwd = #{passwd},</if>
+            <if test="nickname!=null and nickname!=''">nickname = #{nickname},</if>
+            <if test="email!=null and email!=''">email = #{email},</if>
+            <if test="phone!=null and phone!=''">phone = #{phone},</if>
+            update_time = now()
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+
+    <delete id="deleteUser">
+        delete from db_myblog.user where id=#{id}
+    </delete>
+    <select id="pageListUser" resultType="com.rethx.managesys.entity.User">
+        select * from db_myblog.user
+        <where>
+            <if test="keyWord!=null and keyWord!=''">
+                AND ( username like concat('%',#{keyWord},'%') or nickname like concat('%',#{keyWord},'%') )
+            </if>
+            <if test="email!=null and email!=''">
+                AND email like concat('%',#{email},'%')
+            </if>
+            <if test="address!=null and address!=''">
+                AND address like concat('%',#{address},'%')
+            </if>
+        </where>
+        limit #{begin} , #{size}
+    </select>
+    <select id="getCountUser" resultType="java.lang.Integer">
+        select count(*) from db_myblog.user
+        <where>
+            <if test="keyWord!=null and keyWord!=''">
+                AND ( username like concat('%',#{keyWord},'%') or nickname like concat('%',#{keyWord},'%') )
+            </if>
+            <if test="email!=null and email!=''">
+                AND email like concat('%',#{email},'%')
+            </if>
+            <if test="address!=null and address!=''">
+                AND address like concat('%',#{address},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

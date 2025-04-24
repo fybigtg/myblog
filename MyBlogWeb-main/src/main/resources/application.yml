@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db_myblog?serverTimezero=GMT%2b8
+    username: root
+    password: 1234
+  application:
+    name: ManageSys
+  #配置文件传输
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 0
+      #单个数据的大小
+      max-file-size: 20MB
+      #总数据的大小
+      max-request-size: 50MB
+
+server:
+  port: 8090
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+files:
+  download:
+    path: http://localhost:8090
+  upload:
+    path: C://Users/80715/Desktop/mds
+#    path: /home/files
+
